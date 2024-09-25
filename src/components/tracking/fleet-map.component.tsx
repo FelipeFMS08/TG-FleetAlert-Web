@@ -44,7 +44,8 @@ const FleetMap = () => {
                      styles: [{ color: '#ef4444', opacity: 0.7, weight: 5 }], // Cor da rota
                      extendToWaypoints: true,
                      missingRouteTolerance: 10
-                 }
+                 },
+                 show: false
             }).addTo(map);
 
             

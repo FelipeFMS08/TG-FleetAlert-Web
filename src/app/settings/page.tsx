@@ -9,10 +9,27 @@ import { getAllVehicles } from "@/services/vehicle.service";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
+function useMergeState(initialState: any) {
+    const [state, setState] = useState(initialState);
+    const setMergedState = (newState: any) => 
+      setState((prevState: any) => Object.assign({}, prevState, newState)
+    );
+    return [state, setMergedState];
+  }
+
 
 export default function Settings() {
 
     const [vehicles, setVehicles] = useState<VehicleResponse[]>([]);
+    const [userRequest, setUserRequest] = useMergeState({
+        loading: false,
+        user: null,
+      });
+
+      userRequest.loading;
+      userRequest.user;
+
+      setUserRequest({...userRequest, user: "Felipe"});
 
     useEffect(() => {
         const fetchVehicles = async () => {
@@ -22,6 +39,7 @@ export default function Settings() {
 
         fetchVehicles();
     }, []);
+
     return (
         <div className="flex h-screen bg-white dark:bg-zinc-900">
             <NavBarComponent />
