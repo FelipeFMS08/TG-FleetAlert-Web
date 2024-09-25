@@ -1,7 +1,7 @@
 import VehicleCommand from "@/dto/commands/vehicle.command";
 import VehicleResponse from "@/dto/responses/vehicle.response";
 
-const API_URL = process.env.NEXT_BACKEND_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export async function getAllVehicles(): Promise<VehicleResponse[]> {
     const response = await fetch(`${API_URL}/api/vehicles/getAll`, {
