@@ -6,21 +6,21 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { VehicleCreateModal } from "./vehicleCreate.component";
-import { VehicleResponse } from "@/dto/responses/vehicle.response";
+import VehicleResponse from "@/dto/responses/vehicle.response";
 import { set } from "react-hook-form";
 
 
-interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
+interface DataTableToolbarProps {
+  table: Table<VehicleResponse>;
   setVehicles: React.Dispatch<React.SetStateAction<VehicleResponse[]>>;
-  data: TData[];
+  data: VehicleResponse[];
 }
 
-export function DataTableToolbar<TData>({
+export function DataTableToolbar({
   table,
   setVehicles,
   data
-}: DataTableToolbarProps<TData>) {
+}: DataTableToolbarProps) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (

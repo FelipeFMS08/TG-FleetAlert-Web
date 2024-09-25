@@ -2,11 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react"
-import { VehicleResponse } from "@/dto/responses/vehicle.response";
 import { DataTableColumnHeader } from "./vehicleTableHeader.component";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import VehicleResponse from "@/dto/responses/vehicle.response";
 
 export const columns: ColumnDef<VehicleResponse>[] = [
   {

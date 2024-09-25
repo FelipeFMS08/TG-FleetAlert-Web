@@ -16,17 +16,17 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
   
-  interface DataTableColumnHeaderProps<TData, TValue>
+  interface DataTableColumnHeaderProps<VehicleResponse, TValue>
     extends React.HTMLAttributes<HTMLDivElement> {
-    column: Column<TData, TValue>;
+    column: Column<VehicleResponse, TValue>;
     title: string;
   }
   
-  export function DataTableColumnHeader<TData, TValue>({
+  export function DataTableColumnHeader<VehicleResponse, TValue>({
     column,
     title,
     className,
-  }: DataTableColumnHeaderProps<TData, TValue>) {
+  }: DataTableColumnHeaderProps<VehicleResponse, TValue>) {
     if (!column.getCanSort()) {
       return <div className={cn(className)}>{title}</div>;
     }

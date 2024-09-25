@@ -24,13 +24,12 @@ const FleetMap = () => {
             const map = L.map('map').setView([-23.561682, -46.655898], 13);
             mapRef.current = map;
 
-            // Troca a camada para uma versão escura
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             }).addTo(map);
 
-            const startPoint: [number, number] = [-23.4422149,-46.9243186]; // Rua Paulista
-            const endPoint: [number, number] = [-23.4065828,-46.8806725]; // Rua Augusta
+            const startPoint: [number, number] = [-23.4422149,-46.9243186]; 
+            const endPoint: [number, number] = [-23.4065828,-46.8806725];
 
             L.marker(endPoint).addTo(map);
             L.marker(startPoint).addTo(map);
@@ -41,7 +40,7 @@ const FleetMap = () => {
                     L.latLng(endPoint[0], endPoint[1]),
                 ],
                  lineOptions: {
-                     styles: [{ color: '#ef4444', opacity: 0.7, weight: 5 }], // Cor da rota
+                     styles: [{ color: '#ef4444', opacity: 0.7, weight: 5 }], 
                      extendToWaypoints: true,
                      missingRouteTolerance: 10
                  },
@@ -73,6 +72,13 @@ const FleetMap = () => {
                 const bounds = L.latLngBounds([startPoint, endPoint]);
                 map.fitBounds(bounds);
             });
+
+            return () => {
+                if (mapRef.current) {
+                    mapRef.current.remove(); 
+                    mapRef.current = null; 
+                }
+            };
         }
     }, []);
 

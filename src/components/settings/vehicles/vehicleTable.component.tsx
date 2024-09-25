@@ -1,6 +1,5 @@
 "use client";
 
-import { VehicleResponse } from "@/dto/responses/vehicle.response"
 import { getAllVehicles } from "@/services/vehicle.service";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -29,19 +28,19 @@ import {
 } from "@tanstack/react-table";
 import { DataTableToolbar } from "./vehicleTableToolbar.component";
 import { DataTablePagination } from "./vehicleTablePagination.component";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@radix-ui/react-context-menu";
+import VehicleResponse from "@/dto/responses/vehicle.response";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps {
+  columns: ColumnDef<VehicleResponse, string>[];
+  data: VehicleResponse[];
   setVehicles: React.Dispatch<React.SetStateAction<VehicleResponse[]>>;
 }
 
-export function VehicleTableComponent<TData, TValue>({
+export function VehicleTableComponent({
   columns,
   data,
   setVehicles
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
