@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                console.log("Credenciais recebidas:", credentials);
                 const res = await fetch(`${process.env.NEXT_BACKEND_URL}/authentication/login`, {
                     method: 'POST',
                     headers: {
@@ -23,13 +24,14 @@ export const authOptions: NextAuthOptions = {
                     }),
                 });
                 const data = await res.json();
+
+                console.log(data);
                 if (res.ok && data.token) {
                     const decodedToken = jwt.decode(data.token) as {
                         exp: number;
                         id: string;
                         email: string;
                     };
-
                     return {
                         id: decodedToken.id,
                         email: decodedToken.email,

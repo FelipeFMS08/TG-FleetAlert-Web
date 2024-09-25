@@ -33,8 +33,9 @@ export function LoginForm() {
     const router = useRouter();
 
     useEffect(() => {
+        console.log(session);
         if (status === 'authenticated') {
-            router.push('/dashboard'); 
+            router.push('/'); 
         }
     }, [status, router]);
 

@@ -30,6 +30,4 @@ declare module "next-auth/jwt" {
 
 const handler = NextAuth(authOptions);
 
-console.log(process.env.NEXTAUTH_SECRET);
-
 export { handler as POST, handler as GET };
