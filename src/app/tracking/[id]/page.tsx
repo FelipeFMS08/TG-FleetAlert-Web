@@ -2,11 +2,14 @@
 
 import { NavBarComponent } from "@/components/shared/navbar/navbar-component";
 import { ModeToggle } from "@/components/shared/toggle";
-import FleetMap from "@/components/tracking/fleet-map.component";
 import { DriverScoreTrack } from "@/components/tracking/tracking-components/driver-score-track.component";
 import { UserInfoTrack } from "@/components/tracking/tracking-components/user-info-track.component";
-import { useState } from "react";
-import { Circle, MapContainer, TileLayer } from "react-leaflet";
+
+import dynamic from 'next/dynamic'
+ 
+const FleetMap = dynamic(() => import('@/components/tracking/fleet-map.component'), {
+  ssr: false,
+})
 
 export default function TrackingPage({ params }: { params: { slug: string } }) {
 
@@ -18,19 +21,7 @@ export default function TrackingPage({ params }: { params: { slug: string } }) {
                 <DriverScoreTrack />
                 <div className="bg-zinc-800 p-4 col-span-2 row-span-2 rounded-md h-[25rem]">Em codificação</div>
                 <div className="grid grid-cols-subgrid gap-4 row-span-3 rounded-md">
-                    <MapContainer
-                        className="rounded-md"
-                        style={{ height: "100%", width: "500px" }}
-                        center={[-23.561682, -46.655898]}
-                        zoom={13}
-                    >
-                        <TileLayer
-                            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                        />
-                        <FleetMap />
-
-                    </MapContainer>
+                    <FleetMap />
                 </div>
             </div>
 
