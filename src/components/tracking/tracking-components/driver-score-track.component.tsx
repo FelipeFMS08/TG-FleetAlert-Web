@@ -23,9 +23,9 @@ export function DriverScoreTrack() {
     const totalVisitors = chartData[0].desktop + chartData[0].mobile
 
     return (
-        <div className="bg-zinc-800 p-4 rounded-md flex flex-col justify-between h-72">
+        <div className="dark:bg-zinc-800 bg-zinc-100 p-4 rounded-md flex flex-col justify-between h-72">
             <h1 className="text-2xl font-bold">Histórico de Rotas</h1>
-            <h4 className="text-zinc-600">Histórico de rotas concluidas pelo Rafael Oliveira</h4>
+            <h4 className="dark:text-zinc-600">Histórico de rotas concluidas pelo Rafael Oliveira</h4>
             <CardContent className="flex flex-1 items-center pb-0">
                 <ChartContainer
                     config={chartConfig}

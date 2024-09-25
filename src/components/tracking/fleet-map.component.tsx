@@ -4,12 +4,16 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import L from 'leaflet';
+import { useTheme } from "next-themes";
 
 const FleetMap = () => {
     const [estimatedTime, setEstimatedTime] = useState<number | null>(null);
     const mapRef = useRef<L.Map | null>(null);
     const startPoint: [number, number] = [-23.4422149, -46.9243186]; 
     const endPoint: [number, number] = [-23.4065828, -46.8806725]; 
+
+    const { theme } = useTheme();
+
 
     const SetupRouting = () => {
         const map = useMap(); 
@@ -26,12 +30,12 @@ const FleetMap = () => {
                 });
                 L.Marker.prototype.options.icon = DefaultIcon;
 
+                L.marker(endPoint).addTo(map);
+                L.marker(startPoint).addTo(map);
+
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                 }).addTo(map);
-
-                L.marker(endPoint).addTo(map);
-                L.marker(startPoint).addTo(map);
 
                 const routingControl = L.Routing.control({
                     waypoints: [
@@ -45,6 +49,8 @@ const FleetMap = () => {
                     },
                     show: false
                 }).addTo(map);
+
+                
 
                 routingControl.on('routesfound', (e) => {
                     const routes = e.routes;
@@ -82,7 +88,7 @@ const FleetMap = () => {
             zoom={13}
         >
             <TileLayer
-                url='https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                url={theme == 'light' ? `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`: `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png`}
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             />
             <Marker position={startPoint} />

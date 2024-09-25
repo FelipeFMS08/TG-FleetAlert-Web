@@ -3,13 +3,13 @@ import { AlertTriangleIcon, Info, LoaderPinwheel, Locate, LocateFixed } from "lu
 
 export function UserInfoTrack() {
     return (
-        <div className="bg-zinc-800 p-4 rounded-md flex flex-col justify-between h-72">
+        <div className="dark:bg-zinc-800 p-4 rounded-md flex flex-col justify-between h-72 bg-zinc-100">
             <div>
                 <h1 className="text-2xl font-bold">Rafael Oliveira</h1>
-                <h4 className="text-zinc-600">Raf123el  •  Volvo FMX</h4>
+                <h4 className="dark:text-zinc-600 text-zinc-700">Raf123el  •  Volvo FMX</h4>
             </div>
 
-                <h4 className="text-zinc-400"><span className="text-white font-bold">Endereço:</span> Av. Ten. Marques, 5136 - Chácara do Solar I (Fazendinha), Santana de Parnaíba - SP, 06530-001</h4>
+                <h4 className="dark:text-zinc-400 text-zinc-700"><span className="dark:text-white font-bold">Endereço:</span> Av. Ten. Marques, 5136 - Chácara do Solar I (Fazendinha), Santana de Parnaíba - SP, 06530-001</h4>
             {getStatusTrack("FINISHED")}
         </div>
     )
