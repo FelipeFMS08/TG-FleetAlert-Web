@@ -13,7 +13,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { CircleCheck, CircleX } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().min(4, {
@@ -25,6 +27,16 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
+
+    const { data: session, status } = useSession();
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            router.push('/dashboard'); 
+        }
+    }, [status, router]);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -45,7 +57,7 @@ export function LoginForm() {
     return (
         <div className="bg-white dark:bg-zinc-900 min-h-screen w-2/6 flex flex-col items-center justify-center gap-2">
             <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="Vercel Logo"
                 className="dark:text-white mb-10"
                 width={200}

@@ -46,7 +46,7 @@ export function FirstAccessForm() {
             {sendingEmail ? (
                 <div className="bg-white dark:bg-zinc-900 w-1/2 h-96 rounded-md mx-auto justify-self-center flex flex-col items-center justify-center gap-4" >
                     <Image
-                        src="/logo.svg"
+                        src="/logo.png"
                         alt="Vercel Logo"
                         className="dark:text-white mb-3"
                         width={200}
@@ -65,7 +65,7 @@ export function FirstAccessForm() {
                 (
                     <div className="bg-white dark:bg-zinc-900 min-h-screen w-2/6 flex flex-col items-center justify-center gap-2">
                         <Image
-                            src="/logo.svg"
+                            src="/logo.png"
                             alt="Vercel Logo"
                             className="dark:text-white mb-10"
                             width={200}
