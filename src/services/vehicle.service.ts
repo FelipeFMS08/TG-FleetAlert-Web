@@ -10,8 +10,6 @@ export async function getAllVehicles(): Promise<VehicleResponse[]> {
         },
     });
 
-    console.log(response);
-
     if (!response.ok) {
         throw new Error('Failed to fetch vehicles, check de api response');
     }
@@ -31,8 +29,7 @@ export async function createVehicle(vehicleCommand: VehicleCommand): Promise<Veh
     if (!response.ok) { 
         throw new Error('Failed to create a new vehicle, check the API response');
     }
-
     const data = await response.json(); 
-
+    console.log(data as VehicleResponse);
     return data as VehicleResponse;
 }

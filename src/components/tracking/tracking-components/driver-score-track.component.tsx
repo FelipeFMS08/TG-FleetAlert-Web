@@ -5,9 +5,11 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
+import { getRoutesByUserId } from "@/services/routes.service"
+import { useEffect, useState } from "react"
 import { RadialBarChart, PolarRadiusAxis, Label, RadialBar } from "recharts"
 export const description = "A radial chart with stacked sections"
-const chartData = [{ month: "january", desktop: 10, mobile: 30 }]
+const chartData = [{ month: "january", desktop: 0, mobile: 0 }]
 const chartConfig = {
     desktop: {
         label: "Com alertas",
@@ -19,13 +21,42 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export function DriverScoreTrack() {
+interface DriverScoreTrackProps {
+    userId: string;
+    userName: string;
+}
+
+
+export function DriverScoreTrack({ userId, userName }: DriverScoreTrackProps) {
+    const [chartData, setChartData] = useState([{ desktop: 0, mobile: 0 }]);
     const totalVisitors = chartData[0].desktop + chartData[0].mobile
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const routes = await getRoutesByUserId(userId);
+
+                const finishedWithAlerts = routes.filter(route => route.route.status === "FINISHED" && route.route!.alerts!.length > 0).length;
+                const finishedWithoutAlerts = routes.filter(route => route.route.status === "FINISHED" && (!route.route.alerts || route.route.alerts.length === 0)).length;
+
+                setChartData([
+                    {
+                        desktop: finishedWithAlerts,
+                        mobile: finishedWithoutAlerts,
+                    },
+                ]);
+            } catch (error) {
+                console.error("Failed to fetch route data:", error);
+            }
+        }
+
+        fetchData();
+    }, [userId]);
 
     return (
         <div className="dark:bg-zinc-800 bg-zinc-100 p-4 rounded-md flex flex-col justify-between h-72">
             <h1 className="text-2xl font-bold">Histórico de Rotas</h1>
-            <h4 className="dark:text-zinc-600">Histórico de rotas concluidas pelo Rafael Oliveira</h4>
+            <h4 className="dark:text-zinc-600">Histórico de rotas concluidas pelo {userName}</h4>
             <CardContent className="flex flex-1 items-center pb-0">
                 <ChartContainer
                     config={chartConfig}

@@ -16,13 +16,12 @@ export async function POST(request: Request) {
           },
           body: JSON.stringify(requestBody),
         });
-        const responseText = await response.text();
-        console.log('Response Text:', responseText);
         if (!response.ok) {
           return NextResponse.json({ message: 'Error fetching data', status: response.status }, { status: response.status });
         }
-        let responseData = response.status;
-        return NextResponse.json(responseData);
+
+        const data = await response.json();
+        return NextResponse.json(data);
       } catch (error) {
         console.error('Error:', error);
         return NextResponse.json({ message: 'Error handling request' }, { status: 500 });

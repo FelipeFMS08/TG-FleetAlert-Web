@@ -2,7 +2,7 @@
 interface VehicleCommand {
     name: string;
     signSerial: string;
-    idResponsibleid: string;
+    responsibleId: string;
     type: string; 
 }
 

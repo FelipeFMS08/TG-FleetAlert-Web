@@ -8,18 +8,21 @@ import { Input } from "@/components/ui/input";
 import { VehicleCreateModal } from "./vehicleCreate.component";
 import VehicleResponse from "@/dto/responses/vehicle.response";
 import { set } from "react-hook-form";
+import { UsersResponse } from "@/dto/responses/users.response";
 
 
 interface DataTableToolbarProps {
   table: Table<VehicleResponse>;
-  setVehicles: React.Dispatch<React.SetStateAction<VehicleResponse[]>>;
+  setVehicles: React.Dispatch<React.SetStateAction<any>>;
   data: VehicleResponse[];
+  users: UsersResponse[];
 }
 
 export function DataTableToolbar({
   table,
   setVehicles,
-  data
+  data,
+  users
 }: DataTableToolbarProps) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -45,7 +48,7 @@ export function DataTableToolbar({
           </Button>
         )}
       </div>
-      <VehicleCreateModal data={data} setVehicles={setVehicles} />
+      <VehicleCreateModal data={data} setVehicles={setVehicles} users={users} />
     </div>
   );
 }

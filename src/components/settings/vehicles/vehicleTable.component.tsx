@@ -27,19 +27,22 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { DataTableToolbar } from "./vehicleTableToolbar.component";
-import { DataTablePagination } from "./vehicleTablePagination.component";
+import { DataTablePagination } from "../../shared/table/DataTablePagination.component";
 import VehicleResponse from "@/dto/responses/vehicle.response";
+import { UsersResponse } from "@/dto/responses/users.response";
 
 interface DataTableProps {
   columns: ColumnDef<VehicleResponse, string>[];
   data: VehicleResponse[];
-  setVehicles: React.Dispatch<React.SetStateAction<VehicleResponse[]>>;
+  setVehicles: React.Dispatch<React.SetStateAction<any>>;
+  users: UsersResponse[];
 }
 
 export function VehicleTableComponent({
   columns,
   data,
-  setVehicles
+  setVehicles,
+  users
 }: DataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -72,13 +75,13 @@ export function VehicleTableComponent({
   });
 
   return (
-    <div className="min-w-screen-2xl max-w-screen-2xl">
-      <div className="flex justify-between w-full max-w-screen-xl py-3 items-center p-5 bg-zinc-300 dark:bg-zinc-800 dark:text-white text-zinc-900 rounded-md">
+    <div className="w-full p-4 shadow rounded-lg">
+      <div className="flex justify-between min-w-full max-w-screen-xl py-3 items-center p-5 bg-zinc-100 dark:bg-zinc-800 dark:text-white text-zinc-900 rounded-md mb-5">
         <h1>Tabela de Veiculos</h1>
       </div>
 
-      <DataTableToolbar table={table} setVehicles={setVehicles} data={data} />
-      <Table>
+      <DataTableToolbar table={table} setVehicles={setVehicles} data={data} users={users}/>
+      <Table className="mb-5">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -127,7 +130,7 @@ export function VehicleTableComponent({
         </TableBody>
       </Table>
 
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table}/>
 
     </div>
   )

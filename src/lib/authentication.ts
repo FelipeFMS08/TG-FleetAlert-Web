@@ -24,17 +24,19 @@ export const authOptions: NextAuthOptions = {
                     }),
                 });
                 const data = await res.json();
-
+                console.log("RESPOSTAS");
                 console.log(data);
                 if (res.ok && data.token) {
                     const decodedToken = jwt.decode(data.token) as {
                         exp: number;
                         id: string;
                         email: string;
+                        role: string;
                     };
                     return {
                         id: decodedToken.id,
                         email: decodedToken.email,
+                        role: decodedToken.role,
                         accessToken: data.token,
                         expires: decodedToken.exp * 1000,
                     };
@@ -53,6 +55,7 @@ export const authOptions: NextAuthOptions = {
                 token.accessToken = user.accessToken;
                 token.expires = user.expires;
                 token.id = user.id;
+                token.role = user.role;
                 token.email = user.email;
             }
 
@@ -71,6 +74,7 @@ export const authOptions: NextAuthOptions = {
                     token.accessToken = data.token;
                     token.expires = decodedToken.exp * 1000;
                     token.id = decodedToken.id;
+                    token.role = user.role;
                     token.email = decodedToken.email;
                 }
             }
@@ -81,6 +85,7 @@ export const authOptions: NextAuthOptions = {
             session.user = {
                 id: token.id as string,
                 email: token.email as string,
+                role: token.role as string,
             };
             return session;
         }

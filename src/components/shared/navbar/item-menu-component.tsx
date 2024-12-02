@@ -14,6 +14,7 @@ export function MenuItem(props: MenuItemProps) {
             href={props.to}
             className="flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-primary dark:hover:text-white hover:text-white"
             prefetch={false}
+            onClick={props.onClick}
         >
             {props.icon}
         </Link>

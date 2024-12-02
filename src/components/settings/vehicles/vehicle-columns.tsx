@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react"
-import { DataTableColumnHeader } from "./vehicleTableHeader.component";
+import { DataTableColumnHeader } from "../../shared/table/DataTableColumnHeader.component";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
@@ -41,11 +41,11 @@ export const columns: ColumnDef<VehicleResponse>[] = [
     },
   },
   {
-    accessorKey: "idResponsibleid",
+    accessorKey: "responsible",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Responsável" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("idResponsibleid")}</div>,
+    cell: ({ row }) => <div>{row.getValue("responsible")}</div>,
     enableSorting: false,
     enableHiding: false,
     filterFn: (row, id, value) => {

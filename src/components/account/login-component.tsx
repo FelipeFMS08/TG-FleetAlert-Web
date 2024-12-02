@@ -14,8 +14,9 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { CircleCheck, CircleX } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
     email: z.string().min(4, {
@@ -29,13 +30,15 @@ const formSchema = z.object({
 export function LoginForm() {
 
     const { data: session, status } = useSession();
+    const { toast } = useToast()
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const router = useRouter();
 
     useEffect(() => {
         console.log(session);
         if (status === 'authenticated') {
-            router.push('/'); 
+            router.push('/');
         }
     }, [status, router]);
 
@@ -47,16 +50,32 @@ export function LoginForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        signIn('credentials', {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsLoading(true);
+        const response = await signIn('credentials', {
             redirect: false,
             email: values.email,
             password: values.password
         })
+
+        if (response!.status === 401) {
+            toast({
+                variant: "destructive",
+                title: "Opa, credenciais incorretas!",
+                description: "Parece que seu email ou senha estão incorretos, tente novamente!"
+            })
+            setIsLoading(false);
+        } else if (response!.status === 200) {
+            toast({
+                title: "Sucesso!",
+                description: "Login foi efetuado com sucesso, redirecionando..."
+            })
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div className="bg-white dark:bg-zinc-900 min-h-screen w-2/6 flex flex-col items-center justify-center gap-2">
+        <div className="bg-white dark:bg-zinc-900 min-h-screen w-screen md:w-2/6 flex flex-col items-center justify-center gap-2">
             <Image
                 src="/logo.png"
                 alt="Vercel Logo"
@@ -66,7 +85,7 @@ export function LoginForm() {
                 priority
             />
             <h1 className="font-bold text-xl">Bem vindo ao FleetAlert</h1>
-            <p className="text-zinc-600 text-center w-10/12">Lorem ipsum dolor sit amet consectetur. Vestibulum ut quis magnis diam quis id eget varius.</p>
+            <p className="text-zinc-600 text-center w-10/12">Gestão de frotas inteligente com monitoramento em tempo real e geofencing para maior segurança e eficiência.</p>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-10/12 mt-8">
                     <FormField
@@ -113,7 +132,29 @@ export function LoginForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full mt-8">Entrar</Button>
+                    <Button type="submit" className="w-full mt-8">
+                        {isLoading ? (
+                            <div className="flex justify-center items-center">
+                                <svg
+                                    className="animate-spin h-5 w-5 mr-3"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <circle cx="12" cy="12" r="10" strokeWidth="4" />
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4 12a8 8 0 018-8m0 0a8 8 0 018 8m-8-8v8h8"
+                                    />
+                                </svg>
+                                Carregando...
+                            </div>
+                        ) : (
+                            'Entrar'
+                        )}
+                    </Button>
                     <p className="text-zinc-600 text-center">Primeiro acesso? <a className="text-red-400 hover:text-red-500 underline" href="/account/firstAccess">Clique aqui</a></p>
                 </form>
             </Form>
