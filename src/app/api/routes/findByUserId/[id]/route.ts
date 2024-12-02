@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const session = await getServerSession(authOptions);
 
-    const id = params.id; // Extração do parâmetro da URL dinâmica
+    const id = params.id;
 
     if (!id) {
         return NextResponse.json({ message: 'ID is required' }, { status: 400 });
